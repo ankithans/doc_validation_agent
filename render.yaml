@@ -15,7 +15,7 @@ services:
       - key: PYTHON_VERSION
         value: 3.9.0
       - key: API_URL
-        sync: false # This will be set in Render dashboard
+        value: "https://doc-validation-agent.onrender.com/api"
       - key: PIPENV_VENV_IN_PROJECT
         value: "1"
       - key: HOST
