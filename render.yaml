@@ -11,6 +11,10 @@ services:
       - key: PYTHON_VERSION
         value: 3.9.0
       - key: API_URL
-        value: http://localhost:8000/api # This will be updated with your actual API URL
+        sync: false # This will be set in Render dashboard
       - key: PIPENV_VENV_IN_PROJECT
         value: "1"
+      - key: HOST
+        value: "0.0.0.0"
+      - key: PORT
+        value: "7860"
