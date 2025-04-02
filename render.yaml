@@ -15,7 +15,7 @@ services:
       - key: PYTHON_VERSION
         value: 3.9.0
       - key: API_URL
-        value: "https://doc-validation-agent.onrender.com/api"
+        value: "https://doc-validation-agent.onrender.com"
       - key: PIPENV_VENV_IN_PROJECT
         value: "1"
       - key: HOST

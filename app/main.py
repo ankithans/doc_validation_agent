@@ -26,5 +26,5 @@ app.include_router(router, prefix="/api")
 # Create Gradio interface
 interface = create_interface()
 
-# Mount Gradio interface to root route
-app = gr.mount_gradio_app(app, interface, path="/")
+# Mount Gradio interface to a specific path
+app = gr.mount_gradio_app(app, interface, path="/gradio")

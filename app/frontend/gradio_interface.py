@@ -10,7 +10,9 @@ import io
 import fitz  # PyMuPDF for PDF preview
 
 # API endpoint from environment variable
-API_URL = os.getenv("API_URL", "http://localhost:8000/api")
+API_URL = os.getenv("API_URL", "http://localhost:8000")
+if API_URL.endswith('/'):
+    API_URL = API_URL[:-1]  # Remove trailing slash if present
 
 def format_response(response: Dict[str, Any]) -> str:
     """Format the API response for display"""
@@ -98,39 +100,24 @@ def process_document(file_path, doc_type: str) -> Tuple[str, List[Image.Image]]:
         # Read file content
         with open(file_path, 'rb') as f:
             file_content = f.read()
-            
-        # Convert to base64
-        file_base64 = base64.b64encode(file_content).decode('utf-8')
         
-        # Prepare request data
-        data = {
-            "file": file_base64,
-            "content_type": content_type
+        # Prepare the request
+        files = {
+            'file': (file_name, file_content, content_type)
         }
         
         # Make API request
-        try:
-            response = requests.post(
-                f"{API_URL}/extract_by_type/{doc_type}",
-                json=data,
-                timeout=30  # Add timeout
-            )
-            response.raise_for_status()  # Raise exception for bad status codes
-            result = response.json()
-        except requests.exceptions.ConnectionError:
-            return f"Error: Could not connect to API server at {API_URL}. Please check if the server is running and accessible.", preview_images
-        except requests.exceptions.Timeout:
-            return "Error: Request timed out. The server took too long to respond.", preview_images
-        except requests.exceptions.RequestException as e:
-            return f"Error making API request: {str(e)}", preview_images
-        except json.JSONDecodeError:
-            return "Error: Received invalid response from server.", preview_images
+        response = requests.post(
+            f"{API_URL}/api/extract_by_type/{doc_type}",
+            files=files
+        )
         
-        # Format response
-        formatted_response = format_response(result)
-        
-        return formatted_response, preview_images
-        
+        if response.status_code == 200:
+            return format_response(response.json()), preview_images
+        else:
+            error_detail = response.json().get('detail', 'Unknown error')
+            return f"Error: {error_detail}", None
+            
     except Exception as e:
         return f"Error processing document: {str(e)}", None
 
