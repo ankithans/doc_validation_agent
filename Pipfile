@@ -1,0 +1,25 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+pydantic-ai = {extras = ["logfire"], version = "*"}
+fastapi = "*"
+uvicorn = "*"
+python-multipart = ">=0.0.9"
+python-dotenv = "*"
+pydantic = "*"
+pypdf2 = "*"
+logfire = {extras = ["httpx"], version = "*"}
+pillow = ">=10.2.0"
+pdf2image = "*"
+gradio = ">=4.19.2"
+requests = ">=2.31.0"
+fitz = "*"
+pymupdf = ">=1.23.8"
+
+[dev-packages]
+
+[requires]
+python_version = "3.9"

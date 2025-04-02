@@ -1,0 +1,16 @@
+services:
+  - type: web
+    name: doc-validation-agent
+    env: python
+    buildCommand: |
+      python -m pip install --upgrade pip
+      pip install pipenv
+      pipenv install --deploy --system
+    startCommand: python app/frontend/gradio_interface.py
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.9.0
+      - key: API_URL
+        value: http://localhost:8000/api # This will be updated with your actual API URL
+      - key: PIPENV_VENV_IN_PROJECT
+        value: "1"
