@@ -8,7 +8,9 @@ services:
       pipenv --python 3.9
       pipenv lock
       pipenv install --deploy --system
-    startCommand: python app/frontend/gradio_interface.py
+    startCommand: |
+      cd /opt/render/project/src
+      python -m uvicorn app.main:app --host 0.0.0.0 --port $PORT
     envVars:
       - key: PYTHON_VERSION
         value: 3.9.0
@@ -19,7 +21,7 @@ services:
       - key: HOST
         value: "0.0.0.0"
       - key: PORT
-        value: "7860"
+        value: "8000"
       - key: GEMINI_API_KEY
         sync: false # This will be set in Render dashboard
     buildFilter:
