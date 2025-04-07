@@ -14,6 +14,9 @@ class Settings(BaseSettings):
     DEBUG: bool = True
     MAX_CONTENT_LENGTH: int = 10 * 1024 * 1024  # 10MB max file size
 
+    # Model Configuration
+    DEFAULT_MODEL_TYPE: str = "gemini"  # Default model type (gemini, openai, ollama)
+
     # API Keys
     GEMINI_API_KEY: str
     GEMINI_MODEL: str = "gemini-2.0-flash"  # Default model name
